@@ -1,20 +1,20 @@
 import React from 'react';
 import { View, StyleSheet, Text, TextInput, Button } from 'react-native';
+import Card from '../componants/Card';
 
 const StartGameScreen = props => {
     return (
         <View style={styles.screen}>
-            <Text style={styles.title}>新しいゲームを始める</Text>
-            <View style={styles.inputContainer}>
-                <Text>数字を選択しろ</Text>
+            <Text style={styles.title}>NEW GAME</Text>
+            <Card style={styles.inputContainer}>
+                <Text>数字を決めろ</Text>
                 <TextInput  />
                 <View　style={styles.buttonContaniner}>
                     <Button title="リセット" onPress={() => {}} />
                     <Button title="確認" onPress={() => {}} />
                 </View>
+                </Card>
             </View>
-
-        </View>
     );
 };
 
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     inputContainer: {
         width: 300,
         maxWidth: '80%',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     buttonContaniner: {
         flexDirection: 'row',
