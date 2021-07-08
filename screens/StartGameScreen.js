@@ -1,8 +1,9 @@
 import React from 'react'
-import { View, StyleSheet, Text, TextInput, Button } from 'react-native'
+import { View, StyleSheet, Text, Button } from 'react-native'
 
-import Card from '../componants/Card';
-import Colors from '../constants/colors';
+import Card from '../componants/Card'
+import Colors from '../constants/colors'
+import Input from '../componants/Input'
 
 const StartGameScreen = (props) => {
   return (
@@ -10,7 +11,14 @@ const StartGameScreen = (props) => {
       <Text style={styles.title}>NEW GAME</Text>
       <Card style={styles.inputContainer}>
         <Text>数字を決めろ</Text>
-        <TextInput />
+        <Input
+          style={styles.input}
+          blurOnSubmit
+          autoCpitalize="none"
+          autoCorrect={false}
+          keyboardType="number-pad"
+          maxLength={2}
+        />
         <View style={styles.buttonContaniner}>
           <View style={styles.button}>
             <Button title="リセット" onPress={() => {}} color={Colors.accent} />
@@ -46,8 +54,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
   },
   button: {
-      width: 100
-  }
+    width: 100,
+  },
+  input: {
+    width: 50,
+    textAlign: 'center',
+  },
 })
 
 export default StartGameScreen
