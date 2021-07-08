@@ -1,34 +1,59 @@
-import React from 'react'
-import { View, StyleSheet, Text, Button } from 'react-native'
+import React, { useState } from 'react'
+import {
+  View,
+  StyleSheet,
+  Text,
+  Button,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from 'react-native'
 
 import Card from '../componants/Card'
 import Colors from '../constants/colors'
 import Input from '../componants/Input'
 
 const StartGameScreen = (props) => {
+  const [enterdValue, setEnterdValue] = useState('')
+
+  const numberInputHandler = (inputText) => {
+    setEnterdValue(inputText.replace(/[^0-9]/g, ''))
+  }
+
   return (
-    <View style={styles.screen}>
-      <Text style={styles.title}>NEW GAME</Text>
-      <Card style={styles.inputContainer}>
-        <Text>数字を決めろ</Text>
-        <Input
-          style={styles.input}
-          blurOnSubmit
-          autoCpitalize="none"
-          autoCorrect={false}
-          keyboardType="number-pad"
-          maxLength={2}
-        />
-        <View style={styles.buttonContaniner}>
-          <View style={styles.button}>
-            <Button title="リセット" onPress={() => {}} color={Colors.accent} />
+    <TouchableWithoutFeedback
+      onPress={() => {
+        Keyboard.dismiss()
+      }}
+    >
+      <View style={styles.screen}>
+        <Text style={styles.title}>NEW GAME</Text>
+        <Card style={styles.inputContainer}>
+          <Text>数字を決めろ</Text>
+          <Input
+            style={styles.input}
+            blurOnSubmit
+            autoCpitalize="none"
+            autoCorrect={false}
+            keyboardType="number-pad"
+            maxLength={2}
+            onChangeText={numberInputHandler}
+            value={enterdValue}
+          />
+          <View style={styles.buttonContaniner}>
+            <View style={styles.button}>
+              <Button
+                title="リセット"
+                onPress={() => {}}
+                color={Colors.accent}
+              />
+            </View>
+            <View style={styles.button}>
+              <Button title="確認" onPress={() => {}} color={Colors.primary} />
+            </View>
           </View>
-          <View style={styles.button}>
-            <Button title="確認" onPress={() => {}} color={Colors.primary} />
-          </View>
-        </View>
-      </Card>
-    </View>
+        </Card>
+      </View>
+    </TouchableWithoutFeedback>
   )
 }
 
