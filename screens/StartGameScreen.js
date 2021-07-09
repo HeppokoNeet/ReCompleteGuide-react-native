@@ -49,7 +49,7 @@ const StartGameScreen = (props) => {
       <Card style={styles.summaryContainer}>
         <Text>選択した数字は</Text>
         <NumberContainer>{selectedNumber}</NumberContainer>
-        <Button title="ゲームをスタートする" />
+        <Button title="ゲームをスタートする" onPress={() => props.onStartGame(selectedNumber)}/>
       </Card>
     )
   }
@@ -63,7 +63,7 @@ const StartGameScreen = (props) => {
       <View style={styles.screen}>
         <Text style={styles.title}>NEW GAME</Text>
         <Card style={styles.inputContainer}>
-          <Text>数字を決めろ</Text>
+          <Text>最初の数字を決めてください</Text>
           <Input
             style={styles.input}
             blurOnSubmit
