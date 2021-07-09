@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { View, Text, StyleSheet, Button, Alert } from 'react-native'
 
 import NumberContainer from '../componants/NumberContainer'
@@ -20,32 +20,45 @@ const GameScreen = (props) => {
     generateRandomBetween(1, 100, props.userChoice),
   )
 
-  const currentLow = useRef(1);
-  const currentHigh = useRef(100);
+  const [rounds, setRounds] = useState(0)
+  const currentLow = useRef(1)
+  const currentHigh = useRef(100)
+
+  const { userChoice, onGameOver } = props
+
+  useEffect(() => {
+    if (currentGuess === userChoice) {
+      onGameOver(rounds)
+    }
+  }, [currentGuess, userChoice, onGameOver])
 
   const nextGuessHandler = (direction) => {
     if (
       (direction === 'lower' && currentGuess < props.userChoice) ||
       (direction === 'greater' && currentGuess > props.userChoice)
     ) {
-      Alert.alert('嘘をつかないで', '間違ってるよ', [
-        { text: 'ごめんね', style: 'cancel' },
-      ]);
+      Alert.alert('残念！', '推測は間違ってました', [
+        { text: 'リトライする', style: 'cancel' },
+      ])
       return
     }
     if (direction === 'lower') {
-        currentHigh.current = currentGuess;
-
+      currentHigh.current = currentGuess
     } else {
-        currentLow.current = currentGuess;
+      currentLow.current = currentGuess
     }
-    const nextNumber = generateRandomBetween(currentLow.current, currentHigh.current, currentGuess);
-    setCurrentGuess(nextNumber);
+    const nextNumber = generateRandomBetween(
+      currentLow.current,
+      currentHigh.current,
+      currentGuess,
+    )
+    setCurrentGuess(nextNumber)
+    setRounds((curRounds) => curRounds + 1)
   }
 
   return (
     <View style={styles.screen}>
-      <Text>次の数字は？</Text>
+      <Text>相手が決めた数字を予測してみましょう</Text>
       <NumberContainer>{currentGuess}</NumberContainer>
       <Card style={styles.buttonContainer}>
         <Button title="低い" onPress={nextGuessHandler.bind(this, 'lower')} />
