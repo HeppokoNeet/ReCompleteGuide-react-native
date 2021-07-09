@@ -6,11 +6,12 @@ import {
   Button,
   TouchableWithoutFeedback,
   Keyboard,
-  Alert
+  Alert,
 } from 'react-native'
 
 import Card from '../componants/Card'
 import Colors from '../constants/colors'
+import NumberContainer from '../componants/NumberContainer'
 import Input from '../componants/Input'
 
 const StartGameScreen = (props) => {
@@ -30,18 +31,27 @@ const StartGameScreen = (props) => {
   const confirmInputHandler = () => {
     const chosenNumber = parseInt(enterdValue)
     if (isNaN(chosenNumber) || chosenNumber <= 0 || chosenNumber > 99) {
-      Alert.alert('無効な数字です','1から99の数字を選択してください', [{text: 'OK', style: 'destructive', onPress: resetInputHandler}])
-      return;
+      Alert.alert('無効な数字です', '1から99の数字を選択してください', [
+        { text: 'OK', style: 'destructive', onPress: resetInputHandler },
+      ])
+      return
     }
     setConfirmed(true)
     setSelectedNumber(chosenNumber)
     setEnterdValue('')
+    Keyboard.dismiss();
   }
 
   let confirmedOutput
 
   if (confirmed) {
-    confirmedOutput = <Text>選択した数字は： {selectedNumber}</Text>
+    confirmedOutput = (
+      <Card style={styles.summaryContainer}>
+        <Text>選択した数字は</Text>
+        <NumberContainer>{selectedNumber}</NumberContainer>
+        <Button title="ゲームをスタートする" />
+      </Card>
+    )
   }
 
   return (
@@ -114,6 +124,10 @@ const styles = StyleSheet.create({
   input: {
     width: 50,
     textAlign: 'center',
+  },
+  summaryContainer: {
+    marginTop: 20,
+    alignItems: 'center'
   },
 })
 
