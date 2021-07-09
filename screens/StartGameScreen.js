@@ -14,14 +14,33 @@ import Input from '../componants/Input'
 
 const StartGameScreen = (props) => {
   const [enterdValue, setEnterdValue] = useState('')
+  const [confirmed, setConfirmed] = useState(false)
+  const [selectedNumber, setSelectedNumber] = useState()
 
   const numberInputHandler = (inputText) => {
     setEnterdValue(inputText.replace(/[^0-9]/g, ''))
   }
 
   const resetInputHandler = () => {
-     setEnterdValue('');
-  };
+    setEnterdValue('')
+    setConfirmed(false)
+  }
+
+  const confirmInputHandler = () => {
+    const chosenNumber = parseInt(enterdValue)
+    if (chosenNumber === NaN || chosenNumber <= 0 || chosenNumber > 99) {
+      return
+    }
+    setConfirmed(true)
+    setSelectedNumber(chosenNumber)
+    setEnterdValue('')
+  }
+
+  let confirmedOutput
+
+  if (confirmed) {
+    confirmedOutput = <Text>選択した数字は： {selectedNumber}</Text>
+  }
 
   return (
     <TouchableWithoutFeedback
@@ -52,10 +71,15 @@ const StartGameScreen = (props) => {
               />
             </View>
             <View style={styles.button}>
-              <Button title="確認" onPress={() => {}} color={Colors.primary} />
+              <Button
+                title="確認"
+                onPress={confirmInputHandler}
+                color={Colors.primary}
+              />
             </View>
           </View>
         </Card>
+        {confirmedOutput}
       </View>
     </TouchableWithoutFeedback>
   )
